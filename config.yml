@@ -4,7 +4,7 @@ MAX_SEARCH_RESULTS: 4 # Set the maximum search results for internet access DONT 
 ALLOW_DM: true # Set to true to allow direct messages
 SMART_MENTION: true # Set to true to enable smart mention feature
 
-GPT_MODEL: gpt-3.5-turbo-16k-0613 # Model used for chat completion
+GPT_MODEL: gpt-3.5-turbo-1106 # Model used for chat completion
 
 MAX_HISTORY: 8 # Set the maximum message history
 
@@ -13,25 +13,21 @@ AI_NSFW_CONTENT_FILTER: true # Enable NSFW AI detector to detect NSFW prompt on 
 
 LANGUAGE: en # Specify the language code (check 'lang' folder for valid codes)
 
-INSTRUCTIONS: assist # Specify the instruction prompt to use (check 'instructions' folder for valid prompts)
+INSTRUCTIONS: kenzo # Specify the instruction prompt to use (check 'instructions' folder for valid prompts)
 # To add custom prompts, create a .txt file like 'custom.txt' in `instructions` folder and set INSTRUCTIONS as 'custom'
 
-Discord: https://discord.gg/6MT3CZauT8
-Github: https://github.com/mishalhossin/Discord-AI-Chatbot
+Discord: https://discord.gg/ukiyo-fu-shi-937243464079400990
+Github: https://github.com/Ukiyo-Server
 
 TRIGGER:
-  - chatbot
-  - bot nickname
-  - bot alias
-  - bot name
-  - Other bot alias...
+  - kenzo # Set the trigger words to listen for
 # Define the triggers that the bot should always respond to when in message
 
-DISABLE_PRESENCE: false 
+DISABLE_PRESENCE: true 
 PRESENCES:
   - How can I assist you?
-  - Currently in {guild_count} guilds
-  - Support at https://discord.gg/6MT3CZauT8
+  - Pika boo
+  - I am here to help.
 # List of different presences to be used
 
 OCR_MODEL_URLS:
