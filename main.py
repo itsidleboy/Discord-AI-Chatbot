@@ -353,7 +353,7 @@ async def clear(ctx):
 )
 @app_commands.choices(
     model=[
-        app_commands.Choice(name="🙂 SDXL (The best of the best)", value="sdxl"),
+        # app_commands.Choice(name="🙂 SDXL (The best of the best)", value="sdxl"),
         app_commands.Choice(
             name="🌈 Elldreth vivid mix (Landscapes, Stylized characters, nsfw)",
             value="ELLDRETHVIVIDMIX",
@@ -375,7 +375,7 @@ async def clear(ctx):
             name="🏞️ Realistic (Lifelike pictures)", value="REALISTICVS_V20"
         ),
         app_commands.Choice(
-            name="👨‍🎨 Portrait (For headshots I guess)", value="PORTRAIT"
+            # name="👨‍🎨 Portrait (For headshots I guess)", value="PORTRAIT"
         ),
         app_commands.Choice(
             name="🌟 Rev animated (Illustration, Anime)", value="REV_ANIMATED"
@@ -383,8 +383,8 @@ async def clear(ctx):
         app_commands.Choice(name="🤖 Analog", value="ANALOG"),
         app_commands.Choice(name="🌌 AbyssOrangeMix", value="ABYSSORANGEMIX"),
         app_commands.Choice(name="🌌 Dreamlike v1", value="DREAMLIKE_V1"),
-        app_commands.Choice(name="🌌 Dreamlike v2", value="DREAMLIKE_V2"),
-        app_commands.Choice(name="🌌 Dreamshaper 5", value="DREAMSHAPER_5"),
+        # app_commands.Choice(name="🌌 Dreamlike v2", value="DREAMLIKE_V2"),
+        # app_commands.Choice(name="🌌 Dreamshaper 5", value="DREAMSHAPER_5"),
         app_commands.Choice(name="🌌 MechaMix", value="MECHAMIX"),
         app_commands.Choice(name="🌌 MeinaMix", value="MEINAMIX"),
         app_commands.Choice(name="🌌 Stable Diffusion v14", value="SD_V14"),
@@ -492,7 +492,7 @@ async def imagine_dalle(
     size = size.value
     num_images = min(num_images, 4)
     imagefileobjs = await dall_e_gen(model, prompt, size, num_images)
-    await ctx.send(f"🎨 Generated Image by {ctx.author.name}")
+    await ctx.send(f"🎨 Generated Image by {ctx.author.mention}")
     for imagefileobj in imagefileobjs:
         file = discord.File(
             imagefileobj, filename="image.png", spoiler=True, description=prompt
