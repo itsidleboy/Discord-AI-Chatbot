@@ -684,9 +684,9 @@ async def on_command_error(ctx, error):
         )
 
 
-if detect_replit():
-    from bot_utilities.replit_flask_runner import run_flask_in_thread
+from bot_utilities.replit_flask_runner import run_flask_in_thread
 
-    run_flask_in_thread()
+run_flask_in_thread()
+
 if __name__ == "__main__":
     bot.run(TOKEN)
