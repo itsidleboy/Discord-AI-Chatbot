@@ -374,9 +374,9 @@ async def clear(ctx):
         app_commands.Choice(
             name="🏞️ Realistic (Lifelike pictures)", value="REALISTICVS_V20"
         ),
-        app_commands.Choice(
-            # name="👨‍🎨 Portrait (For headshots I guess)", value="PORTRAIT"
-        ),
+        # app_commands.Choice(
+        #     name="👨‍🎨 Portrait (For headshots I guess)", value="PORTRAIT"
+        # ),
         app_commands.Choice(
             name="🌟 Rev animated (Illustration, Anime)", value="REV_ANIMATED"
         ),
