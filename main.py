@@ -79,9 +79,7 @@ def fetch_chat_models():
     if response.status_code == 200:
         ModelsData = response.json()
         models.extend(
-            model["id"]
-            for model in ModelsData.get("data")
-            if "chat" in model["endpoints"][0]
+            model["id"] for model in ModelsData.get("data") if "max_images" not in model
         )
     else:
         print(f"Failed to fetch chat models. Status code: {response.status_code}")
@@ -215,11 +213,8 @@ async def on_message(message):
         history = message_history[key]
 
         async with message.channel.typing():
-            response = await asyncio.to_thread(
-                generate_response,
-                instructions=instructions,
-                search=search_results,
-                history=history,
+            response = await generate_response(
+                instructions=instructions, search=search_results, history=history
             )
             if internet_access:
                 await message.remove_reaction("🔎", bot.user)
@@ -353,50 +348,50 @@ async def clear(ctx):
         app_commands.Choice(name="📏 Euler a", value="Euler a"),
         app_commands.Choice(name="📐 Heun", value="Heun"),
         app_commands.Choice(name="💥 DPM++ 2M Karras", value="DPM++ 2M Karras"),
-        app_commands.Choice(name="🔍 DDIM", value="DDIM",)
+        app_commands.Choice(name="🔍 DDIM", value="DDIM"),
     ]
 )
 @app_commands.choices(
     model=[
         app_commands.Choice(name="🙂 SDXL (The best of the best)", value="sdxl"),
         app_commands.Choice(
-            name="🌈 Elldreth vivid mix (Landscapes, Stylized characters, nsfw",
-           , value"'ELLDRETHVIVIDMI",
+            name="🌈 Elldreth vivid mix (Landscapes, Stylized characters, nsfw)",
+            value="ELLDRETHVIVIDMIX",
         ),
         app_commands.Choice(
-            name="💪 Deliberate v2 (Anything you want, nsfw", "value"='DELIBERAT"
+            name="💪 Deliberate v2 (Anything you want, nsfw)", value="DELIBERATE"
         ),
         app_commands.Choice(
-            name="🔮 Dreamshaper (HOLYSHIT this so good"', value"'DREAMSHAPER_"
+            name="🔮 Dreamshaper (HOLYSHIT this so good)", value="DREAMSHAPER_6"
         ),
-        app_commands.Choice(name="🎼 Lyrie"', value"'LYRIEL_V1"),
+        app_commands.Choice(name="🎼 Lyriel", value="LYRIEL_V16"),
         app_commands.Choice(
-            name="💥 Anything diffusion (Good for anime"', value"'ANYTHING_V"
-        ),
-        app_commands.Choice(
-            name="🌅 Openjourney (Midjourney alternative"', value"'OPENJOURNE"
+            name="💥 Anything diffusion (Good for anime)", value="ANYTHING_V4"
         ),
         app_commands.Choice(
-            name="🏞️ Realistic (Lifelike pictures"', value"'REALISTICVS_V2"
+            name="🌅 Openjourney (Midjourney alternative)", value="OPENJOURNEY"
         ),
         app_commands.Choice(
-            name="👨‍🎨 Portrait (For headshots I gues")', valu"='PORTRA"
+            name="🏞️ Realistic (Lifelike pictures)", value="REALISTICVS_V20"
         ),
         app_commands.Choice(
-            name="🌟 Rev animated (Illustration, Anime"', value"'REV_ANIMATE"
+            name="👨‍🎨 Portrait (For headshots I guess)", value="PORTRAIT"
         ),
-        app_commands.Choice(name="🤖 Analo"', value"'ANALO"),
-        app_commands.Choice(name="🌌 AbyssOrangeMi"', value"'ABYSSORANGEMI"),
-        app_commands.Choice(name="🌌 Dreamlike v"', value"'DREAMLIKE_V"),
-        app_commands.Choice(name="🌌 Dreamlike v"', value"'DREAMLIKE_V"),
-        app_commands.Choice(name="🌌 Dreamshaper "', value"'DREAMSHAPER_"),
-        app_commands.Choice(name="🌌 MechaMi"', value"'MECHAMI"),
-        app_commands.Choice(name="🌌 MeinaMi"', value"'MEINAMI"),
-        app_commands.Choice(name="🌌 Stable Diffusion v1"', value"'SD_V1"),
-        app_commands.Choice(name="🌌 Stable Diffusion v1"', value"'SD_V1"),
-        app_commands.Choice(name="🌌 Shonin5's Beautiful People", value"'SB"),
-        app_commands.Choice(name="🌌 TheAlly's Mix II", value"'THEALLYSMI"),
-        app_commands.Choice(name="🌌 Timeles"', value"'TIMELES"),
+        app_commands.Choice(
+            name="🌟 Rev animated (Illustration, Anime)", value="REV_ANIMATED"
+        ),
+        app_commands.Choice(name="🤖 Analog", value="ANALOG"),
+        app_commands.Choice(name="🌌 AbyssOrangeMix", value="ABYSSORANGEMIX"),
+        app_commands.Choice(name="🌌 Dreamlike v1", value="DREAMLIKE_V1"),
+        app_commands.Choice(name="🌌 Dreamlike v2", value="DREAMLIKE_V2"),
+        app_commands.Choice(name="🌌 Dreamshaper 5", value="DREAMSHAPER_5"),
+        app_commands.Choice(name="🌌 MechaMix", value="MECHAMIX"),
+        app_commands.Choice(name="🌌 MeinaMix", value="MEINAMIX"),
+        app_commands.Choice(name="🌌 Stable Diffusion v14", value="SD_V14"),
+        app_commands.Choice(name="🌌 Stable Diffusion v15", value="SD_V15"),
+        app_commands.Choice(name="🌌 Shonin's Beautiful People", value="SBP"),
+        app_commands.Choice(name="🌌 TheAlly's Mix II", value="THEALLYSMIX"),
+        app_commands.Choice(name="🌌 Timeless", value="TIMELESS"),
     ]
 )
 @app_commands.describe(
@@ -448,15 +443,15 @@ async def imagine(
     else:
         embed = discord.Embed(color=discord.Color.random())
     embed.title = f"🎨Generated Image by {ctx.author.display_name}"
-    embed.add_field(name="📝 Promp"', value="'- {prompt"', inline=False)
+    embed.add_field(name="📝 Prompt", value=f"- {prompt}", inline=False)
     if negative is not None:
-        embed.add_field(name="📝 Negative Promp"', value="'- {negative"', inline=False)
-    embed.add_field(name="🤖 Mode"', value="'- {model.value"', inline=True)
-    embed.add_field(name="🧬 Sample"', value="'- {sampler.value"', inline=True)
-    embed.add_field(name="🌱 See"', value="'- {seed"', inline=True)
+        embed.add_field(name="📝 Negative Prompt", value=f"- {negative}", inline=False)
+    embed.add_field(name="🤖 Model", value=f"- {model.value}", inline=True)
+    embed.add_field(name="🧬 Sampler", value=f"- {sampler.value}", inline=True)
+    embed.add_field(name="🌱 Seed", value=f"- {seed}", inline=True)
 
     if is_nsfw:
-        embed.add_field(name="🔞 NSF"', value="'- {str(is_nsfw)"', inline=True)
+        embed.add_field(name="🔞 NSFW", value=f"- {str(is_nsfw)}", inline=True)
 
     sent_message = await ctx.send(embed=embed, file=img_file)
 
@@ -477,9 +472,9 @@ async def imagine(
 )
 @app_commands.choices(
     size=[
-        app_commands.Choice(name="🔳 Smal"', value"'256x25"),
-        app_commands.Choice(name="🔳 Mediu"', value"'512x51"),
-        app_commands.Choice(name="🔳 Larg"', value"'1024x102"),
+        app_commands.Choice(name="🔳 Small", value="256x256"),
+        app_commands.Choice(name="🔳 Medium", value="512x512"),
+        app_commands.Choice(name="🔳 Large", value="1024x1024"),
     ]
 )
 @app_commands.describe(
@@ -497,7 +492,7 @@ async def imagine_dalle(
     size = size.value
     num_images = min(num_images, 4)
     imagefileobjs = await dall_e_gen(model, prompt, size, num_images)
-    await ctx.send(f"🎨 Generated Image by {ctx.author.name"')
+    await ctx.send(f"🎨 Generated Image by {ctx.author.name}")
     for imagefileobj in imagefileobjs:
         file = discord.File(
             imagefileobj, filename="image.png", spoiler=True, description=prompt
