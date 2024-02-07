@@ -353,7 +353,7 @@ async def clear(ctx):
         app_commands.Choice(name="📏 Euler a", value="Euler a"),
         app_commands.Choice(name="📐 Heun", value="Heun"),
         app_commands.Choice(name="💥 DPM++ 2M Karras", value="DPM++ 2M Karras"),
-        app_commands.Choice(name="🔍 DDIM", value="DDIM",
+        app_commands.Choice(name="🔍 DDIM", value="DDIM",)
     ]
 )
 @app_commands.choices(
@@ -364,7 +364,7 @@ async def clear(ctx):
            , value"'ELLDRETHVIVIDMI",
         ),
         app_commands.Choice(
-            name="💪 Deliberate v2 (Anything you want, nsfw"', value"'DELIBERAT"
+            name="💪 Deliberate v2 (Anything you want, nsfw", "value"='DELIBERAT"
         ),
         app_commands.Choice(
             name="🔮 Dreamshaper (HOLYSHIT this so good"', value"'DREAMSHAPER_"
